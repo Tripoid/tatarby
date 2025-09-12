@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Татарбы - Создайте свой сайт</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .create-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .create-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .create-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .result.success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .result.error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .site-url {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            word-break: break-all;
+        }
+
+        .site-url a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .site-url a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Татарбы</h1>
+        <p class="description">
+            Создайте свой собственный сайт за несколько секунд!<br>
+            Просто введите название и содержимое, и мы автоматически разместим ваш сайт в интернете.
+        </p>
+        
+        <form id="siteForm">
+            <div class="form-group">
+                <label for="title">Название сайта:</label>
+                <input type="text" id="title" name="title" required placeholder="Например: Мой первый сайт">
+            </div>
+            
+            <div class="form-group">
+                <label for="content">Содержимое сайта:</label>
+                <textarea id="content" name="content" required placeholder="Добро пожаловать на мой сайт!
+
+Здесь вы можете рассказать о себе, своих увлечениях, проектах или чем-то еще, что вам интересно.
+
+Пишите все, что хотите - это ваш сайт!"></textarea>
+            </div>
+            
+            <button type="submit" class="create-btn" id="createBtn">
+                СОЗДАТЬ САЙТ
+            </button>
+        </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Создаем ваш сайт...</p>
+        </div>
+
+        <div class="result" id="result">
+            <div id="resultMessage"></div>
+            <div class="site-url" id="siteUrl" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('siteForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const createBtn = document.getElementById('createBtn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const resultMessage = document.getElementById('resultMessage');
+            const siteUrl = document.getElementById('siteUrl');
+            
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            
+            // Show loading
+            createBtn.disabled = true;
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/create-site', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ title, content })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.className = 'result success';
+                    resultMessage.textContent = data.message;
+                    siteUrl.innerHTML = `<strong>Адрес вашего сайта:</strong><br><a href="${data.url}" target="_blank">${data.url}</a>`;
+                    siteUrl.style.display = 'block';
+                    
+                    // Clear form
+                    document.getElementById('siteForm').reset();
+                } else {
+                    result.className = 'result error';
+                    resultMessage.textContent = data.error || 'Произошла ошибка при создании сайта';
+                    siteUrl.style.display = 'none';
+                }
+                
+            } catch (error) {
+                result.className = 'result error';
+                resultMessage.textContent = 'Ошибка подключения к серверу';
+                siteUrl.style.display = 'none';
+            }
+            
+            // Hide loading and show result
+            loading.style.display = 'none';
+            result.style.display = 'block';
+            createBtn.disabled = false;
+        });
+    </script>
+</body>
+</html>
