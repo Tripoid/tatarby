@@ -1,0 +1,46 @@
+# Configuration for Russian-Tatar Translation Model
+
+# Model configuration
+model:
+  architecture: "t5"  # Options: t5, marian, auto
+  model_name: "t5-small"  # Pretrained model name
+  max_length: 128  # Maximum sequence length
+
+# Training configuration
+training:
+  num_epochs: 5
+  batch_size: 8
+  learning_rate: 5e-5
+  warmup_steps: 500
+  save_steps: 500
+  eval_steps: 500
+  logging_steps: 100
+  patience: 3  # Early stopping patience
+  save_total_limit: 3
+
+# Data configuration
+data:
+  dataset_name: "IPSAN/tatar_translation_dataset"
+  source_lang: "russian"
+  target_lang: "tatar"
+  test_size: 0.1
+  val_size: 0.1
+  use_sample: false  # Set to true to use sample dataset
+
+# Evaluation configuration
+evaluation:
+  metrics: ["bleu", "rouge", "exact_match"]
+  max_samples: 1000  # Max samples for evaluation (null for all)
+
+# Path configuration
+paths:
+  output_dir: "./results"
+  model_dir: "./models"
+  logs_dir: "./logs"
+
+# Generation configuration (for inference)
+generation:
+  num_beams: 4
+  max_new_tokens: 128
+  temperature: 1.0
+  do_sample: false
