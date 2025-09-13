@@ -1,0 +1,9 @@
+[build]
+  command = "jekyll build"
+  publish = "_site"
+
+[redirects]
+  [[redirects]]
+    from = "/*"
+    to = "/index.html"
+    status = 200
