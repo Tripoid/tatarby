@@ -1,4 +1,4 @@
-name: Jekyll site CI
+name: Jekyll site Netlify Deploy
 
 on:
   push:
@@ -8,11 +8,10 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
+
     - name: Build the site in the jekyll/builder container
       run: |
         docker run \
