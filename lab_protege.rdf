@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns="http://www.example.org/fish#">
+
+  <!-- Ontology Header -->
+  <owl:Ontology rdf:about="http://www.example.org/fish">
+    <rdfs:label>Fish Ontology</rdfs:label>
+    <rdfs:comment>An ontology describing fish species, their characteristics, habitats, and behaviors in aquatic environments.</rdfs:comment>
+    <owl:versionInfo>1.0</owl:versionInfo>
+  </owl:Ontology>
+
+  <!-- Classes -->
+  
+  <!-- Root class for all fish -->
+  <owl:Class rdf:ID="Fish">
+    <rdfs:label>Fish</rdfs:label>
+    <rdfs:comment>Aquatic vertebrate animals that live in water and breathe through gills.</rdfs:comment>
+  </owl:Class>
+
+  <!-- Fish categories by habitat -->
+  <owl:Class rdf:ID="FreshwaterFish">
+    <rdfs:label>Freshwater Fish</rdfs:label>
+    <rdfs:comment>Fish that live in freshwater environments such as rivers, lakes, and streams.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Fish"/>
+  </owl:Class>
+
+  <owl:Class rdf:ID="SaltwaterFish">
+    <rdfs:label>Saltwater Fish</rdfs:label>
+    <rdfs:comment>Fish that live in saltwater environments such as oceans and seas.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Fish"/>
+  </owl:Class>
+
+  <!-- Fish categories by feeding behavior -->
+  <owl:Class rdf:ID="CarnivorousFish">
+    <rdfs:label>Carnivorous Fish</rdfs:label>
+    <rdfs:comment>Fish that primarily feed on other fish and aquatic animals.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Fish"/>
+  </owl:Class>
+
+  <owl:Class rdf:ID="HerbivorousFish">
+    <rdfs:label>Herbivorous Fish</rdfs:label>
+    <rdfs:comment>Fish that primarily feed on aquatic plants and algae.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Fish"/>
+  </owl:Class>
+
+  <owl:Class rdf:ID="OmnivorousFish">
+    <rdfs:label>Omnivorous Fish</rdfs:label>
+    <rdfs:comment>Fish that feed on both plants and other animals.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Fish"/>
+  </owl:Class>
+
+  <!-- Aquatic Environment classes -->
+  <owl:Class rdf:ID="AquaticHabitat">
+    <rdfs:label>Aquatic Habitat</rdfs:label>
+    <rdfs:comment>The aquatic environment where fish live and reproduce.</rdfs:comment>
+  </owl:Class>
+
+  <owl:Class rdf:ID="Ocean">
+    <rdfs:label>Ocean</rdfs:label>
+    <rdfs:comment>Large body of saltwater that covers most of the Earth's surface.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#AquaticHabitat"/>
+  </owl:Class>
+
+  <owl:Class rdf:ID="River">
+    <rdfs:label>River</rdfs:label>
+    <rdfs:comment>Flowing freshwater body that moves toward an ocean, sea, lake, or another river.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#AquaticHabitat"/>
+  </owl:Class>
+
+  <owl:Class rdf:ID="Lake">
+    <rdfs:label>Lake</rdfs:label>
+    <rdfs:comment>Large body of freshwater surrounded by land.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#AquaticHabitat"/>
+  </owl:Class>
+
+  <!-- Object Properties -->
+  
+  <owl:ObjectProperty rdf:ID="livesIn">
+    <rdfs:label>lives in</rdfs:label>
+    <rdfs:comment>Describes where a fish lives and inhabits.</rdfs:comment>
+    <rdfs:domain rdf:resource="#Fish"/>
+    <rdfs:range rdf:resource="#AquaticHabitat"/>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:ID="feedsOn">
+    <rdfs:label>feeds on</rdfs:label>
+    <rdfs:comment>Describes what a fish eats in its aquatic environment.</rdfs:comment>
+    <rdfs:domain rdf:resource="#Fish"/>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:ID="swimsWith">
+    <rdfs:label>swims with</rdfs:label>
+    <rdfs:comment>Describes schooling behavior among fish.</rdfs:comment>
+    <rdfs:domain rdf:resource="#Fish"/>
+    <rdfs:range rdf:resource="#Fish"/>
+  </owl:ObjectProperty>
+
+  <!-- Datatype Properties -->
+  
+  <owl:DatatypeProperty rdf:ID="bodyLength">
+    <rdfs:label>body length</rdfs:label>
+    <rdfs:comment>The length of the fish's body measured in centimeters.</rdfs:comment>
+    <rdfs:domain rdf:resource="#Fish"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:ID="waterDepth">
+    <rdfs:label>water depth</rdfs:label>
+    <rdfs:comment>The typical depth in meters where the fish swims.</rdfs:comment>
+    <rdfs:domain rdf:resource="#Fish"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:ID="waterTemperature">
+    <rdfs:label>water temperature</rdfs:label>
+    <rdfs:comment>The preferred water temperature in Celsius for the fish.</rdfs:comment>
+    <rdfs:domain rdf:resource="#Fish"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:ID="gillCount">
+    <rdfs:label>gill count</rdfs:label>
+    <rdfs:comment>The number of gill slits the fish has for breathing.</rdfs:comment>
+    <rdfs:domain rdf:resource="#Fish"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+  </owl:DatatypeProperty>
+
+  <!-- Fish Species Instances -->
+  
+  <FreshwaterFish rdf:ID="Salmon">
+    <rdfs:label>Salmon</rdfs:label>
+    <rdfs:comment>Anadromous fish that spawn in freshwater but live most of their life in saltwater.</rdfs:comment>
+    <bodyLength rdf:datatype="http://www.w3.org/2001/XMLSchema#float">75.0</bodyLength>
+    <waterDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#float">50.0</waterDepth>
+    <waterTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#float">12.0</waterTemperature>
+    <gillCount rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</gillCount>
+  </FreshwaterFish>
+
+  <SaltwaterFish rdf:ID="Tuna">
+    <rdfs:label>Tuna</rdfs:label>
+    <rdfs:comment>Large, fast-swimming marine fish found in warm ocean waters.</rdfs:comment>
+    <bodyLength rdf:datatype="http://www.w3.org/2001/XMLSchema#float">200.0</bodyLength>
+    <waterDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#float">200.0</waterDepth>
+    <waterTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#float">18.0</waterTemperature>
+    <gillCount rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</gillCount>
+  </SaltwaterFish>
+
+  <FreshwaterFish rdf:ID="Trout">
+    <rdfs:label>Trout</rdfs:label>
+    <rdfs:comment>Freshwater fish related to salmon, found in cool, clear streams and lakes.</rdfs:comment>
+    <bodyLength rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</bodyLength>
+    <waterDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#float">10.0</waterDepth>
+    <waterTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</waterTemperature>
+    <gillCount rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</gillCount>
+  </FreshwaterFish>
+
+  <SaltwaterFish rdf:ID="Shark">
+    <rdfs:label>Shark</rdfs:label>
+    <rdfs:comment>Cartilaginous fish with multiple gill slits and powerful swimming abilities.</rdfs:comment>
+    <bodyLength rdf:datatype="http://www.w3.org/2001/XMLSchema#float">400.0</bodyLength>
+    <waterDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</waterDepth>
+    <waterTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#float">20.0</waterTemperature>
+    <gillCount rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5</gillCount>
+  </SaltwaterFish>
+
+  <FreshwaterFish rdf:ID="Carp">
+    <rdfs:label>Carp</rdfs:label>
+    <rdfs:comment>Freshwater fish commonly found in lakes and slow-moving rivers.</rdfs:comment>
+    <bodyLength rdf:datatype="http://www.w3.org/2001/XMLSchema#float">60.0</bodyLength>
+    <waterDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</waterDepth>
+    <waterTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.0</waterTemperature>
+    <gillCount rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</gillCount>
+  </FreshwaterFish>
+
+  <!-- Habitat Instances -->
+  
+  <Ocean rdf:ID="PacificOcean">
+    <rdfs:label>Pacific Ocean</rdfs:label>
+    <rdfs:comment>The largest ocean on Earth, home to many marine fish species.</rdfs:comment>
+  </Ocean>
+
+  <Ocean rdf:ID="AtlanticOcean">
+    <rdfs:label>Atlantic Ocean</rdfs:label>
+    <rdfs:comment>The second largest ocean, connecting the Americas with Europe and Africa.</rdfs:comment>
+  </Ocean>
+
+  <River rdf:ID="AmazonRiver">
+    <rdfs:label>Amazon River</rdfs:label>
+    <rdfs:comment>The largest river system in the world, home to diverse freshwater fish.</rdfs:comment>
+  </River>
+
+  <Lake rdf:ID="LakeBaikal">
+    <rdfs:label>Lake Baikal</rdfs:label>
+    <rdfs:comment>The world's deepest and oldest freshwater lake, containing unique fish species.</rdfs:comment>
+  </Lake>
+
+  <!-- Property Assertions -->
+  
+  <rdf:Description rdf:about="#Salmon">
+    <livesIn rdf:resource="#AmazonRiver"/>
+    <feedsOn>smaller fish and aquatic insects</feedsOn>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="#Tuna">
+    <livesIn rdf:resource="#PacificOcean"/>
+    <feedsOn>smaller fish and squid</feedsOn>
+    <swimsWith rdf:resource="#Tuna"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="#Trout">
+    <livesIn rdf:resource="#AmazonRiver"/>
+    <feedsOn>insects and small crustaceans</feedsOn>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="#Shark">
+    <livesIn rdf:resource="#AtlanticOcean"/>
+    <feedsOn>fish, seals, and other marine animals</feedsOn>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="#Carp">
+    <livesIn rdf:resource="#LakeBaikal"/>
+    <feedsOn>aquatic plants and small invertebrates</feedsOn>
+  </rdf:Description>
+
+</rdf:RDF>
